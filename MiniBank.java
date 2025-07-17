@@ -1,11 +1,13 @@
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.HashMap;
 import java.time.LocalTime;
 import java.time.LocalDate;
 
-public class MiniBank {
+public class MiniBank extends customer{
     double accountBalance;                  // available account balance
     String bankName;                        // Bank name
     String dateTime;                        // date and time
@@ -19,6 +21,7 @@ public class MiniBank {
 
     public MiniBank() throws FileNotFoundException {
          s2 = new Scanner(new File("C:\\Users\\CodeLine\\Documents\\minibank\\fund.txt"));// reads the funds from a file
+
 
 
     }
@@ -45,6 +48,7 @@ public class MiniBank {
                 case 6: Exit=true;
                 System.out.println("Program Ended Thank you" ); // displays final account balance
             }
+
 
         }
     }
@@ -84,31 +88,35 @@ public class MiniBank {
 
 
     public  static void deposit() throws FileNotFoundException {                    // function that reads the amount of funds
-
+        MiniBank m=new MiniBank();
         double fund ;
+        double balance=m.accountBalance();
         Scanner s2;
         s2 = new Scanner(new File("C:\\Users\\CodeLine\\Documents\\minibank\\fund.txt"));// reads the funds from a file
         fund=s2.nextDouble();
         if (fund > 0.0) {
-            customer.accountBalance((int) fund);
+            balance+=fund;
             LocalTime currentTime=LocalTime.now();
             System.out.println("Deposited amount of  "+ fund+"  at " + currentTime);
         } else {
             System.out.println("insufficient fund");
         }
-
+        HashMap<Integer,Object> deposited=new HashMap<>();
+        deposited.put(m.accountNumber(), balance);
     }
 
 
-    public  static void withdraw(){
+    public  static void withdraw() throws FileNotFoundException {
+        MiniBank m=new MiniBank();
+        Scanner s1=new Scanner(System.in);
 
         System.out.println("Enter amount to withdraw: ");
         double amount = s1.nextDouble();
 
-        if (amount <= accountBalance && amount >= 0.0) {
-            accountBalance -= amount;
+        if (amount <= m.accountBalance && amount >= 0.0) {
+            m.accountBalance -= amount;
             LocalTime currentTime=LocalTime.now();
-            System.out.println("Withdrawal successful. New balance: " + accountBalance+" deposited at");
+            System.out.println("Withdrawal successful. New balance: " + m.accountBalance+" deposited at");
         } else {
             System.out.println("Insufficient funds or invalid amount.");
         }
@@ -118,8 +126,8 @@ public class MiniBank {
 
     public static void customerData() throws IOException {
 
-        List<String> accounts= new ArrayList<>();
-        accounts.add(name);
+        List<String> accounts= Files.readAllLines(Path.of("C:\\Users\\CodeLine\\Documents\\PPractice\\accounts.txt"));
+
         System.out.println("accounts added\t"  + accounts);
 
 
