@@ -37,14 +37,14 @@ public class MiniBank extends customer{
         Integer choice;
         while ( Exit ==false){
           //  MiniBank bank = new MiniBank();      // Calling the object from the constructor class
-            System.out.println("Enter Choice of operation:\n 1.Create Account \n 2. Deposit \n 6. Exit"); // displays final account balance
+            System.out.println("Enter Choice of operation:\n 1.Create Account \n 2. Deposit \n 3. withdraw\n  4. customer data\n  6. Exit"); // displays final account balance
             choice = Integer.parseInt(s1.nextLine());
 
             switch(choice) {
                 case 1: createAccount(Accounts);  break;             // Runs the function createAccount
                 case 2:deposit(); break;                    // Runs deposit
-                case 3:withdraw();                    //Runs withdraw
-                case 4:customerData();                // Runs customer data
+                case 3:withdraw(); break;                   //Runs withdraw
+                case 4:customerData();   break;             // Runs customer data
                 case 6: Exit=true;
                 System.out.println("Program Ended Thank you" ); // displays final account balance
             }
@@ -53,7 +53,7 @@ public class MiniBank extends customer{
         }
     }
 
-    public static void createAccount( HashMap<Integer, Set<Object>> Accounts ){               // function that creates account
+    public static void createAccount( HashMap<Integer, Set<Object>> Accounts ) throws IOException {               // function that creates account
 
         Scanner s1 = new Scanner(System.in);
 
@@ -81,8 +81,12 @@ public class MiniBank extends customer{
         customerInfo.add(intialBalance);
         Accounts.put(accountNumber, customerInfo);
 
-
-
+        try {
+            FileWriter file2 = new FileWriter("accounts created.txt",true);
+            file2.write("account number "+ accountNumber+ "=>" + "customer info  "+customerInfo)  ;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -116,7 +120,7 @@ public class MiniBank extends customer{
         if (amount <= m.accountBalance && amount >= 0.0) {
             m.accountBalance -= amount;
             LocalTime currentTime=LocalTime.now();
-            System.out.println("Withdrawal successful. New balance: " + m.accountBalance+" deposited at");
+            System.out.println("Withdrawal successful. New balance: " + m.accountBalance+" deposited at  "+ currentTime);
         } else {
             System.out.println("Insufficient funds or invalid amount.");
         }
@@ -125,41 +129,33 @@ public class MiniBank extends customer{
 
 
     public static void customerData() throws IOException {
-
+        Scanner s1=new Scanner(System.in);
         List<String> accounts= Files.readAllLines(Path.of("C:\\Users\\CodeLine\\Documents\\PPractice\\accounts.txt"));
 
         System.out.println("accounts added\t"  + accounts);
 
+        System.out.println("Select the desired account");
 
-        HashMap<String,Integer> map1= new HashMap<>();
-        map1.put("nasser", 124345345);
-        map1.put("abdullah", 456765756);
-        map1.put("ahmed", 54676657);
-        map1.put(name,accountNumber);
-        FileWriter file1=new FileWriter("customerdata.txt",true);
-        file1.write(name + " : "+ accountNumber+ " : "+bankName+" \n ");
-        file1.close();
+        int n=Integer.parseInt(s1.nextLine());
+        switch (n){
 
-        System.out.println("enter customer data ");
-        s1.nextLine();
-        String search=s1.nextLine();
-
-        if(map1.containsKey(search)){
-
-            System.out.println("account found\t" + map1.get(search));
-
-
+            case 1: System.out.println(accounts.get(0)); break;
+            case 2: System.out.println(accounts.get(1)); break;
+            case 3: System.out.println(accounts.get(2)); break;
         }
-        else {
-            System.out.println("invalid account");
-        }
+
 
 
 
         }
 
 
-    }
+
+
+        }
+
+
+
 
 
 
