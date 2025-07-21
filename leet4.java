@@ -17,5 +17,5 @@ public class leet4 {
             }
             else break;
         }return first.substring(0,index);
-    } 
+    }
 }
