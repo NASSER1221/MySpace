@@ -4,7 +4,7 @@ public class leet5 {
 
     public static int longestP(String str) {
         Stack<Integer> stack = new Stack<>();
-        stack.push(-1);  
+        stack.push(-1);
 
         int limit = 0;
 
