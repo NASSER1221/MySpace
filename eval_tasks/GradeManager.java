@@ -54,19 +54,23 @@ public class GradeManager {
 
         for(int i=0;i<names.length;i++){
 
-            System.out.println("the student name is  "+ names[i] +"   the grade is" + scores[i]);
+            System.out.println("The student name is "+ names[i] +" the grade is  " + scores[i]);
             if(scores[i]<60){
                 Students.add(names[i]);
             }
 
         }
 return Students.toArray(new String[0]) ;
+
     }
 
     public static void main(String[] args) {
         String[] Students={"nasser", "abdullah"};
-
         System.out.println(Arrays.asList(reverseStudentNames(Students)));
 
+        /// /////////////////////////////////////////////
+
+        int [] Scores={50 , 60 };
+        System.out.println(Arrays.asList(findFailingStudents(Students,Scores)));
     }
 }
